@@ -1,6 +1,6 @@
 # 📌 Práticas e Estudos de Automação de API REST com Cypress
 
-Criei este repositório contendo minnhas práticas e estudos voltados para automação de testes de API REST utilizando o Cypress.  
+Criei este repositório contendo minhas práticas e estudos voltados para automação de testes de API REST utilizando o Cypress.  
 
 ## 🚀 Tecnologias utilizadas
 - [Cypress](https://www.cypress.io/) – Framework de testes end-to-end
