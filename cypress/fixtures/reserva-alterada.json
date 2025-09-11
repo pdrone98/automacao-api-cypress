@@ -1,0 +1,11 @@
+{
+    "firstname" : "Gabriel",
+    "lastname" : "Pedrone",
+    "totalprice" : 1500,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2019-01-01",
+        "checkout" : "2020-01-01"
+    },
+    "additionalneeds" : "Não quero mais café!"
+}
