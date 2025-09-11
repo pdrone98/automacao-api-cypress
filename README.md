@@ -8,6 +8,10 @@ Criei este repositório contendo minhas práticas e estudos voltados para automa
 
 ---
 
+## 📚 Documentação das APIs utilizadas
+- https://restful-api.dev/
+- https://restful-booker.herokuapp.com/apidoc/index.html
+
 ## ⚡ Passo a passo para execução
 
 1. 📥 **Clonar o repositório**
