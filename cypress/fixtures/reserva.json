@@ -1,7 +1,7 @@
 
 {
-    "firstname" : "Eduardo",
-    "lastname" : "Finotti",
+    "firstname" : "Teste",
+    "lastname" : "Automacao",
     "totalprice" : 500,
     "depositpaid" : true,
     "bookingdates" : {

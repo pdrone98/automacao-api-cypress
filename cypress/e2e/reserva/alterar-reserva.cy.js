@@ -1,33 +1,28 @@
 ///<reference types="cypress"/> 
 
-
-const payload_reserva = require("../fixtures/reserva.json");
-const reserva_alterada = require("../fixtures/reserva-alterada.json");
-
+import { gerarReservaAleatoria } from '../../support/utils/reserva-funcoes.js';
+const reserva_alterada = require("../../fixtures/reserva-alterada.json");
 
 //FUNCIONALIDADE
 describe("Alterar Reserva", () => {
 
-    var tokenAut;
-    var id_reserva_criada;
+    let tokenAut;
+    let id_reserva_criada;
 
-    //ANTES DE CADA TESTE: FAZER O LOGIN E ARMAZENAR O TOKEN
+    //ANTES DE CADA TESTE: FAZER O LOGIN, ARMAZENAR O TOKEN e CRIAR UMA RESERVA
     beforeEach(() => {
-        cy.login()
-            .then((login) => {
+        cy.login().then((login) => {
                 tokenAut = login.body.token;
             });
-    });
 
-    //ANTES DE CADA TESTE: CRIAR UMA RESERVA
-    beforeEach(() => {
-        cy.cadastrarReservaAleatoria().then((resposta) => {
+        const reserva = gerarReservaAleatoria();
+        cy.cadastrarReserva(reserva).then((resposta) => {
             expect(resposta.status).to.equal(200);
             id_reserva_criada = resposta.body.bookingid;
-        })
+        });
     });
 
-    //CENÁRIO
+    //CENÁRIOS
     it("Alterar reserva com sucesso", () => {
         cy.alterarReserva(id_reserva_criada, tokenAut, reserva_alterada)
             .then((respostaAlterada) => {
@@ -42,7 +37,12 @@ describe("Alterar Reserva", () => {
                 expect(respostaAlterada.body.bookingdates.checkout).to.equal(reserva_alterada.bookingdates.checkout);
                 expect(respostaAlterada.body.additionalneeds).to.equal(reserva_alterada.additionalneeds);
             });
-
     });
 
+    it("Alterar reserva inexistente", () => {
+        cy.alterarReserva(99999, tokenAut, reserva_alterada, { failOnStatusCode: false }).then((resposta) => {
+            expect(resposta.status).to.equal(405);
+            expect(resposta.statusText).to.equal("Method Not Allowed");
+        });
+    });
 });
