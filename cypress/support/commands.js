@@ -23,7 +23,6 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('login', () => {
     cy.request({
@@ -36,7 +35,7 @@ Cypress.Commands.add('login', () => {
     });
 });
 
-Cypress.Commands.add('alterarReserva', (id_reserva_criada, tokenAut, reserva_alterada) => {
+Cypress.Commands.add('alterarReserva', (id_reserva_criada, tokenAut, reserva_alterada, options = {}) => {
     cy.request({
         method: "PUT",
         url: `/booking/${id_reserva_criada}`,
@@ -44,7 +43,8 @@ Cypress.Commands.add('alterarReserva', (id_reserva_criada, tokenAut, reserva_alt
             Cookie: `token=${tokenAut}`
         },
         body: reserva_alterada,
-    });
+        ...options    /// O spread operator torna o comando flexível e reutilizável,
+    });               /// permitindo passar opções adicionais para a requisição PUT conforme necessário.
 });
 
 Cypress.Commands.add('cadastrarReserva', (payload_reserva) => {
@@ -55,30 +55,21 @@ Cypress.Commands.add('cadastrarReserva', (payload_reserva) => {
     });
 });
 
-Cypress.Commands.add('cadastrarReservaAleatoria', () => {
-    cy.request({
-        method: "POST",
-        url: "/booking",
-        body: {
-            firstname: faker.person.firstName(),
-            lastname: faker.person.lastName(),
-            totalprice: faker.finance.amount({ min: 10, max: 9999, dec: 0 }),
-            depositpaid: true,
-            bookingdates: {
-                checkin: faker.date.anytime().toString().slice(0, 9),
-                checkout: "2025-01-01"
-            },
-            additionalneeds: "Não quero mais café!"
-        }
-    });
-});
-
 Cypress.Commands.add('deletarReserva', (idReserva, tokenAut) => {
     cy.request({
         method: "DELETE",
         url: `/booking/${idReserva}`,
         headers: {
             Cookie: `token=${tokenAut}`
-        }
+        },
+        failOnStatusCode: false
     });
+});
+
+Cypress.Commands.add('buscarReserva', (idReserva, options = {}) => {
+    cy.request({
+        method: "GET",
+        url: `/booking/${idReserva}`,
+        ...options     /// O spread operator torna o comando flexível e reutilizável, 
+    });                /// permitindo passar opções adicionais para a requisição GET conforme necessário.
 });

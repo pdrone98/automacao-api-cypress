@@ -7,13 +7,11 @@ describe("Buscar dispositivo", () => {
     //cenario de teste
     it("Buscar dispositivo existente", () => {
 
-        //request
         cy.request({
             method: 'GET',
             url: "https://api.restful-api.dev/objects/3",
         }).then((resultado) => {
             //quando resultado acontecer
-            
             //espera que o status seja 200
             expect(resultado.status).to.eq(200);
 
